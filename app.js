@@ -1,19 +1,24 @@
-require('dotenv').config();
-require('express-async-errors');
+require("dotenv").config();
+require("express-async-errors");
 
-const express = require('express');
+const express = require("express");
 const app = express();
 
 // controller
-
+const stripeController = require("./controllers/stripeController");
+//routers
+// const stripeRouter = require("./Routes/stripeRoutes");
 // error handler
-const notFoundMiddleware = require('./middleware/not-found');
-const errorHandlerMiddleware = require('./middleware/error-handler');
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.use(express.json());
-app.use(express.static('./public'));
+app.use(express.static("./public"));
 
 // stripe
+// app.use("/", stripeRouter);
+// initiating our middleware
+app.post("/stripe", stripeController);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
